@@ -25,10 +25,15 @@
                    <TableColumn prefWidth="75.0" text="C2" />
                  </columns>
                </TableView>
-               <TextField layoutX="261.0" layoutY="14.0" />
+               <TextField layoutX="261.0" layoutY="14.0" promptText="Search by Part ID or Name" />
                <Button fx:id="addButton" layoutX="228.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToAddPartScene" text="Add" />
                <Button layoutX="285.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToModifyPartScene" text="Modify" />
                <Button layoutX="357.0" layoutY="287.0" mnemonicParsing="false" text="Delete" />
+               <Text layoutX="48.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parts">
+                  <font>
+                     <Font name="Arial Bold" size="13.0" />
+                  </font>
+               </Text>
             </children>
          </Pane>
          <Pane layoutX="551.0" layoutY="127.0" prefHeight="320.0" prefWidth="468.0" style="-fx-border-color: black;">
@@ -39,10 +44,15 @@
                      <TableColumn prefWidth="75.0" text="C2" />
                   </columns>
                </TableView>
-               <TextField layoutX="261.0" layoutY="14.0" />
-               <Button layoutX="228.0" layoutY="287.0" mnemonicParsing="false" text="Add" />
+               <TextField layoutX="261.0" layoutY="14.0" promptText="Search by Part ID or Name" />
+               <Button layoutX="228.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToAddProductScene" text="Add" />
                <Button layoutX="285.0" layoutY="287.0" mnemonicParsing="false" text="Modify" />
                <Button layoutX="357.0" layoutY="287.0" mnemonicParsing="false" text="Delete" />
+               <Text layoutX="48.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Products">
+                  <font>
+                     <Font name="Arial Bold" size="13.0" />
+                  </font>
+               </Text>
             </children>
          </Pane>
          <Button layoutX="961.0" layoutY="485.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" text="Exit" />
