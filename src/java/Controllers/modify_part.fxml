@@ -14,7 +14,7 @@
             <ToggleGroup fx:id="group1" />
         </toggleGroup></RadioButton>
     <RadioButton fx:id="outsourced" layoutX="256.0" layoutY="44.0" mnemonicParsing="false" onAction="#radioSwitch" text="Outsourced" toggleGroup="$group1" />
-    <Text layoutX="48.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modify Part" wrappingWidth="89.0">
+    <Text layoutX="48.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modify Part" wrappingWidth="89.0">
         <font>
             <Font name="Arial Bold" size="15.0" />
         </font>

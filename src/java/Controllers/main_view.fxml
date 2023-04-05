@@ -25,7 +25,7 @@
                    <TableColumn prefWidth="75.0" text="C2" />
                  </columns>
                </TableView>
-               <TextField layoutX="261.0" layoutY="14.0" promptText="Search by Part ID or Name" />
+               <TextField layoutX="259.0" layoutY="14.0" prefHeight="26.0" prefWidth="162.0" promptText="Search by Models.Part ID or Name" text="Search by Part ID or Name" />
                <Button fx:id="addButton" layoutX="228.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToAddPartScene" text="Add" />
                <Button layoutX="285.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToModifyPartScene" text="Modify" />
                <Button layoutX="357.0" layoutY="287.0" mnemonicParsing="false" text="Delete" />
@@ -44,7 +44,7 @@
                      <TableColumn prefWidth="75.0" text="C2" />
                   </columns>
                </TableView>
-               <TextField layoutX="261.0" layoutY="14.0" promptText="Search by Part ID or Name" />
+               <TextField layoutX="238.0" layoutY="14.0" prefHeight="26.0" prefWidth="182.0" promptText="Search by Models.Part ID or Name" text="Search by Product ID or Name" />
                <Button layoutX="228.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToAddProductScene" text="Add" />
                <Button layoutX="285.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToModifyProductScene" text="Modify" />
                <Button layoutX="357.0" layoutY="287.0" mnemonicParsing="false" text="Delete" />
