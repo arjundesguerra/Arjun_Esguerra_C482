@@ -2,6 +2,7 @@ package Controllers;
 
 import Models.InHouse;
 import Models.Inventory;
+import Models.Outsourced;
 import Models.Part;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,8 +32,7 @@ public class AddPartController {
     @FXML
     private TextField min;
     @FXML
-    private TextField machineId;
-
+    private TextField source;
     @FXML private ToggleGroup group1;
 
     @FXML private RadioButton inhouse;
@@ -85,14 +85,22 @@ public class AddPartController {
         double partPrice = 0.0;
         int partMax = 0;
         int partMin = 0;
-        int partMachineId = 0;
+        Object partSource = null; // store source as an Object
 
         try {
             partStock = Integer.parseInt(stock.getText());
             partPrice = Double.parseDouble(price.getText());
             partMax = Integer.parseInt(max.getText());
             partMin = Integer.parseInt(min.getText());
-            partMachineId = Integer.parseInt(machineId.getText());
+            // check radio button selection
+            if (inhouse.isSelected()) {
+                partSource = Integer.parseInt(source.getText());
+            } else if (outsourced.isSelected()) {
+                if (source.getText().matches(".*\\d.*")) {
+                    throw new NumberFormatException();
+                }
+                partSource = source.getText(); // store as a string
+            }
         } catch (NumberFormatException e) {
             String errorMessage = "Please enter a valid value for ";
             if (!partName.matches("^[a-zA-Z ]+$")) {
@@ -110,9 +118,12 @@ public class AddPartController {
             if (!min.getText().matches("\\d+")) {
                 errorMessage += "min (an integer), ";
             }
-            if (!machineId.getText().matches("\\d+")) {
+            if (inhouse.isSelected() && !source.getText().matches("\\d+")) {
                 errorMessage += "machine ID (an integer), ";
+            } else if (outsourced.isSelected() && source.getText().matches(".*\\d.*")) {
+                errorMessage += "company name (a string without digits), ";
             }
+            // removes comma at last error
             errorMessage = errorMessage.substring(0, errorMessage.length() - 2);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid Input");
@@ -128,7 +139,10 @@ public class AddPartController {
             alert.showAndWait();
             return;
         }
-        if(inhouse.isSelected()) {
+        // check radio button selection
+        if (inhouse.isSelected()) {
+            // cast partSource to int
+            int machineId = (int) partSource;
             InHouse newPart = new InHouse(0, null, 0, 0, 0, 0, 0);
             newPart.setId(autoId());
             newPart.setName(partName);
@@ -136,10 +150,23 @@ public class AddPartController {
             newPart.setStock(partStock);
             newPart.setMin(partMin);
             newPart.setMax(partMax);
-            newPart.setMachineId(partMachineId);
+            newPart.setMachineId(machineId);
             Inventory.getAllParts().add(newPart);
-            switchToMainScene(event);
+        } else if (outsourced.isSelected()) {
+            // cast partSource to String
+            String companyName = (String) partSource;
+            Outsourced newPart = new Outsourced(0, null, 0, 0, 0, 0, null);
+            newPart.setId(autoId());
+            newPart.setName(partName);
+            newPart.setPrice(partPrice);
+            newPart.setStock(partStock);
+            newPart.setMin(partMin);
+            newPart.setMax(partMax);
+            newPart.setCompanyName(companyName);
+            Inventory.getAllParts().add(newPart);
         }
+        switchToMainScene(event);
     }
+
 
 }
