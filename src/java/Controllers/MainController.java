@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -27,13 +28,30 @@ public class MainController implements Initializable {
 
     private Stage stage;
     private Scene scene;
+    @FXML
+    private Button deleteButton;
     @FXML private TableView<Part> partTable;
     @FXML private TableColumn<Part, Integer> partIdColumn;
     @FXML private TableColumn<Part, String> partNameColumn;
     @FXML private TableColumn<Part, Integer> partInventoryColumn;
     @FXML private TableColumn<Part, Double> partPriceColumn;
 
+    public void initialize(URL location, ResourceBundle resourceBundle) {
+        partTable.setItems(getAllParts());
+        partIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        partInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        partPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+        partTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        deleteButton.setOnAction(e -> {
+            Part selectedPart = partTable.getSelectionModel().getSelectedItem();
+            if (selectedPart != null) {
+                Inventory.deletePart(selectedPart);
+                partTable.getItems().remove(selectedPart);
+            }
+        });
+    }
 
     public void switchToAddPartScene(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("add_part.fxml"));
@@ -68,14 +86,6 @@ public class MainController implements Initializable {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-    }
-
-    public void initialize(URL location, ResourceBundle resourceBundle) {
-        partTable.setItems(getAllParts());
-        partIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        partInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        partPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
     @FXML
