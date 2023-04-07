@@ -26,13 +26,13 @@
    <Text layoutX="86.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Max" wrappingWidth="58.0" AnchorPane.leftAnchor="84.0" AnchorPane.topAnchor="320.0" />
    <Text fx:id="machineOrCompany" layoutX="81.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Machine ID" wrappingWidth="89.0" AnchorPane.leftAnchor="84.0" AnchorPane.topAnchor="370.0" />
    <Text layoutX="373.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min" wrappingWidth="37.0" AnchorPane.leftAnchor="373.0" AnchorPane.topAnchor="320.0" />
-   <TextField layoutX="173.0" layoutY="117.0" AnchorPane.leftAnchor="190.0" />
-   <TextField layoutX="173.0" layoutY="167.0" AnchorPane.leftAnchor="190.0" />
-   <TextField layoutX="173.0" layoutY="217.0" AnchorPane.leftAnchor="190.0" />
-   <TextField layoutX="173.0" layoutY="267.0" AnchorPane.leftAnchor="190.0" />
-   <TextField layoutX="173.0" layoutY="317.0" AnchorPane.leftAnchor="190.0" />
-   <TextField layoutX="173.0" layoutY="367.0" AnchorPane.leftAnchor="190.0" />
-   <TextField layoutX="410.0" layoutY="317.0" />
+   <TextField editable="false" layoutX="173.0" layoutY="117.0" promptText="Auto Gen - Disabled" AnchorPane.leftAnchor="190.0" />
+   <TextField fx:id="name" layoutX="173.0" layoutY="167.0" AnchorPane.leftAnchor="190.0" />
+   <TextField fx:id="stock" layoutX="173.0" layoutY="217.0" AnchorPane.leftAnchor="190.0" />
+   <TextField fx:id="price" layoutX="173.0" layoutY="267.0" AnchorPane.leftAnchor="190.0" />
+   <TextField fx:id="max" layoutX="173.0" layoutY="317.0" AnchorPane.leftAnchor="190.0" />
+   <TextField fx:id="machineId" layoutX="173.0" layoutY="367.0" AnchorPane.leftAnchor="190.0" />
+   <TextField fx:id="min" layoutX="410.0" layoutY="317.0" />
    <Button layoutX="357.0" layoutY="425.0" mnemonicParsing="false" text="Save" />
    <Button layoutX="419.0" layoutY="425.0" mnemonicParsing="false" onAction="#switchToMainScene" text="Cancel" />
 </AnchorPane>

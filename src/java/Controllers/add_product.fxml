@@ -30,7 +30,7 @@
             <TextField layoutX="140.0" layoutY="238.0" prefHeight="26.0" prefWidth="63.0" />
             <TextField layoutX="140.0" layoutY="283.0" prefHeight="26.0" prefWidth="63.0" />
             <TextField layoutX="259.0" layoutY="283.0" prefHeight="26.0" prefWidth="63.0" />
-            <TextField layoutX="599.0" layoutY="27.0" prefHeight="26.0" prefWidth="173.0" promptText="ta" text="Search by Part ID or Name" />
+            <TextField editable="false" layoutX="599.0" layoutY="27.0" prefHeight="26.0" prefWidth="173.0" promptText="Auto Gen - Disabled" />
             <TableView layoutX="446.0" layoutY="71.0" prefHeight="180.0" prefWidth="332.0">
               <columns>
                 <TableColumn prefWidth="75.0" text="C1" />
@@ -45,7 +45,7 @@
             </TableView>
             <Button layoutX="686.0" layoutY="260.0" mnemonicParsing="false" text="Add" />
             <Button layoutX="611.0" layoutY="484.0" mnemonicParsing="false" text="Remove Associated Part" />
-            <Button layoutX="612.0" layoutY="521.0" mnemonicParsing="false" text="Save" />
+            <Button fx:id="saveButton" layoutX="612.0" layoutY="521.0" mnemonicParsing="false" text="Save" />
             <Button layoutX="706.0" layoutY="521.0" mnemonicParsing="false" onAction="#switchToMainScene" text="Cancel" />
          </children>
       </Pane>
