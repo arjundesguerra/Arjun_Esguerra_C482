@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -80,12 +81,53 @@ public class AddPartController {
 
     public void savePart(ActionEvent event) throws IOException {
         String partName = name.getText();
-        int partStock = Integer.valueOf(stock.getText());
-        double partPrice = Double.valueOf(price.getText());
-        int partMax = Integer.valueOf(max.getText());
-        int partMin = Integer.valueOf(min.getText());
-        int partMachineId = Integer.valueOf(machineId.getText());
+        int partStock = 0;
+        double partPrice = 0.0;
+        int partMax = 0;
+        int partMin = 0;
+        int partMachineId = 0;
 
+        try {
+            partStock = Integer.parseInt(stock.getText());
+            partPrice = Double.parseDouble(price.getText());
+            partMax = Integer.parseInt(max.getText());
+            partMin = Integer.parseInt(min.getText());
+            partMachineId = Integer.parseInt(machineId.getText());
+        } catch (NumberFormatException e) {
+            String errorMessage = "Please enter a valid value for ";
+            if (!partName.matches("^[a-zA-Z ]+$")) {
+                errorMessage += "name (a string), ";
+            }
+            if (!stock.getText().matches("\\d+")) {
+                errorMessage += "stock (an integer), ";
+            }
+            if (!price.getText().matches("\\d+(\\.\\d+)?")) {
+                errorMessage += "price (a double), ";
+            }
+            if (!max.getText().matches("\\d+")) {
+                errorMessage += "max (an integer), ";
+            }
+            if (!min.getText().matches("\\d+")) {
+                errorMessage += "min (an integer), ";
+            }
+            if (!machineId.getText().matches("\\d+")) {
+                errorMessage += "machine ID (an integer), ";
+            }
+            errorMessage = errorMessage.substring(0, errorMessage.length() - 2);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Input");
+            alert.setHeaderText("Please enter valid input values.");
+            alert.setContentText(errorMessage);
+            alert.showAndWait();
+            return;
+        }
+        if (partMax < partMin) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Input");
+            alert.setHeaderText("Max should be greater than or equal to Min.");
+            alert.showAndWait();
+            return;
+        }
         if(inhouse.isSelected()) {
             InHouse newPart = new InHouse(0, null, 0, 0, 0, 0, 0);
             newPart.setId(autoId());
@@ -98,6 +140,6 @@ public class AddPartController {
             Inventory.getAllParts().add(newPart);
             switchToMainScene(event);
         }
-
     }
+
 }
