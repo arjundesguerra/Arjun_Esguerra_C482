@@ -17,7 +17,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class AddPartController {
     @FXML
@@ -79,7 +78,7 @@ public class AddPartController {
         return maxId + 1;
     }
 
-    public void savePart(ActionEvent event) {
+    public void savePart(ActionEvent event) throws IOException {
         String partName = name.getText();
         int partStock = Integer.valueOf(stock.getText());
         double partPrice = Double.valueOf(price.getText());
@@ -96,7 +95,8 @@ public class AddPartController {
             newPart.setMin(partMin);
             newPart.setMax(partMax);
             newPart.setMachineId(partMachineId);
-
+            Inventory.getAllParts().add(newPart);
+            switchToMainScene(event);
         }
 
     }
