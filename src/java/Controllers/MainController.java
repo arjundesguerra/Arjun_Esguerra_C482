@@ -31,11 +31,10 @@ public class MainController implements Initializable {
 
     private Stage stage;
     private Scene scene;
-    @FXML
-    private Button partDeleteButton;
 
+    @FXML private Button partModifyButton;
+    @FXML private Button partDeleteButton;
     @FXML private TextField partSearch;
-
     @FXML private TableView<Part> partTable;
     @FXML private TableColumn<Part, Integer> partIdColumn;
     @FXML private TableColumn<Part, String> partNameColumn;
@@ -50,32 +49,35 @@ public class MainController implements Initializable {
         partPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         partTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        partDeleteButton.setOnAction(e -> {
-            Part selectedPart = partTable.getSelectionModel().getSelectedItem();
-            if (selectedPart != null) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation Dialog");
-                alert.setHeaderText("Are you sure you want to delete this part?");
-                alert.setContentText("Press OK to confirm or Cancel to go back.");
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK) {
-                    Inventory.deletePart(selectedPart);
-                    partTable.getItems().remove(selectedPart);
-                }
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Please select a part to delete.");
-                alert.showAndWait();
-            }
-        });
+
+        partDeleteButton.setOnAction(e -> deletePart());
 
         partSearch.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 searchParts(partSearch.getText());
             }
         });
+    }
+
+    private void deletePart() {
+        Part selectedPart = partTable.getSelectionModel().getSelectedItem();
+        if (selectedPart != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText("Are you sure you want to delete this part?");
+            alert.setContentText("Press OK to confirm or Cancel to go back.");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                Inventory.deletePart(selectedPart);
+                partTable.getItems().remove(selectedPart);
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a part to delete.");
+            alert.showAndWait();
+        }
     }
 
     private void searchParts(String searchQuery) {
@@ -104,10 +106,6 @@ public class MainController implements Initializable {
         }
     }
 
-
-
-
-
     public void switchToAddPartScene(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("add_part.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -118,13 +116,26 @@ public class MainController implements Initializable {
     }
 
     public void switchToModifyPartScene(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("modify_part.fxml"));
+        Part selectedPart = partTable.getSelectionModel().getSelectedItem();
+        if (selectedPart == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a part to modify.");
+            alert.showAndWait();
+            return;
+        }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("modify_part.fxml"));
+        Parent root = loader.load();
+        ModifyPartController modifyPartController = loader.getController();
+        modifyPartController.setPart(selectedPart);
+
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
     }
+
 
     public void switchToAddProductScene(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("add_product.fxml"));

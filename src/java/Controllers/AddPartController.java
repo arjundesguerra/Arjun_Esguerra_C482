@@ -11,16 +11,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class AddPartController {
+
+    @FXML private AnchorPane mainPane;
     @FXML
     private TextField name;
     @FXML
@@ -40,6 +41,8 @@ public class AddPartController {
     @FXML private RadioButton outsourced;
 
     @FXML private Text machineOrCompany;
+
+    @FXML private Button saveButton;
 
     private Stage stage;
     private Scene scene;

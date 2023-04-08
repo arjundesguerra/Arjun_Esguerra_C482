@@ -1,5 +1,6 @@
 package Controllers;
 
+import Models.Part;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,6 +40,10 @@ public class ModifyPartController {
         } else {
             machineOrCompany.setText("Company Name");
         }
+    }
+
+    public void setPart(Part part) {
+
     }
 
     public void switchToMainScene(ActionEvent event) throws IOException {
