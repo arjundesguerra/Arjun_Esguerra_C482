@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static Models.Inventory.getAllParts;
@@ -44,8 +45,15 @@ public class MainController implements Initializable {
         deleteButton.setOnAction(e -> {
             Part selectedPart = partTable.getSelectionModel().getSelectedItem();
             if (selectedPart != null) {
-                Inventory.deletePart(selectedPart);
-                partTable.getItems().remove(selectedPart);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText("Are you sure you want to delete this part?");
+                alert.setContentText("Press OK to confirm or Cancel to go back.");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    Inventory.deletePart(selectedPart);
+                    partTable.getItems().remove(selectedPart);
+                }
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -55,6 +63,7 @@ public class MainController implements Initializable {
             }
         });
     }
+
 
     public void switchToAddPartScene(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("add_part.fxml"));
