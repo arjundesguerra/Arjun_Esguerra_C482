@@ -92,6 +92,7 @@ public class AddPartController {
             partPrice = Double.parseDouble(price.getText());
             partMax = Integer.parseInt(max.getText());
             partMin = Integer.parseInt(min.getText());
+
             // check radio button selection
             if (inhouse.isSelected()) {
                 partSource = Integer.parseInt(source.getText());
@@ -132,10 +133,21 @@ public class AddPartController {
             alert.showAndWait();
             return;
         }
+        // check if max is less than min
         if (partMax < partMin) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid Input");
-            alert.setHeaderText("Max should be greater than or equal to Min.");
+            alert.setHeaderText("Input Error");
+            alert.setContentText("Max should be greater than or equal to Min.");
+            alert.showAndWait();
+            return;
+        }
+        // check if stock is between min and max values
+        if (partStock < partMin || partStock > partMax) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Input");
+            alert.setHeaderText("Input Error");
+            alert.setContentText("Inventory must be between minimum and max values.");
             alert.showAndWait();
             return;
         }
