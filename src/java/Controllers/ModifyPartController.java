@@ -1,6 +1,7 @@
 package Controllers;
 
 import Models.InHouse;
+import Models.Inventory;
 import Models.Outsourced;
 import Models.Part;
 import javafx.event.ActionEvent;
@@ -9,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -44,11 +46,8 @@ public class ModifyPartController {
 
     private Stage stage;
     private Scene scene;
-
     private Part part;
-
-    private InHouse inHouse;
-
+    private int selectedPartIndex;
 
     public void initialize() {
         group1 = new ToggleGroup();
@@ -64,8 +63,9 @@ public class ModifyPartController {
         }
     }
 
-    public void setPart(Part part) {
+    public void setPart(Part part, int selectedPartIndex) {
         this.part = part;
+        id.setText(Integer.toString(part.getId()));
         name.setText(part.getName());
         stock.setText(Integer.toString(part.getStock()));
         price.setText(Double.toString(part.getPrice()));
@@ -81,6 +81,97 @@ public class ModifyPartController {
             machineOrCompany.setText("Company Name");
             source.setText(((Outsourced) part).getCompanyName());
         }
+        this.selectedPartIndex = selectedPartIndex;
+
+    }
+
+    public void savePart(ActionEvent event) throws IOException {
+        String partName = name.getText();
+        int partId = 0;
+        int partStock = 0;
+        double partPrice = 0.0;
+        int partMax = 0;
+        int partMin = 0;
+        Object partSource = null;
+
+        try {
+            partId = Integer.valueOf(id.getText());
+            partStock = Integer.parseInt(stock.getText());
+            partPrice = Double.parseDouble(price.getText());
+            partMax = Integer.parseInt(max.getText());
+            partMin = Integer.parseInt(min.getText());
+
+            // check radio button selection
+            if (inhouse.isSelected()) {
+                partSource = Integer.parseInt(source.getText());
+            } else if (outsourced.isSelected()) {
+                if (source.getText().matches(".*\\d.*")) {
+                    throw new NumberFormatException();
+                }
+                partSource = source.getText(); // store as a string
+            }
+        } catch (NumberFormatException e) {
+            String errorMessage = "Please enter a valid value for ";
+            if (!partName.matches("^[a-zA-Z ]+$")) {
+                errorMessage += "name (a string), ";
+            }
+            if (!stock.getText().matches("\\d+")) {
+                errorMessage += "stock (an integer), ";
+            }
+            if (!price.getText().matches("\\d+(\\.\\d+)?")) {
+                errorMessage += "price (a double), ";
+            }
+            if (!max.getText().matches("\\d+")) {
+                errorMessage += "max (an integer), ";
+            }
+            if (!min.getText().matches("\\d+")) {
+                errorMessage += "min (an integer), ";
+            }
+            if (inhouse.isSelected() && !source.getText().matches("\\d+")) {
+                errorMessage += "machine ID (an integer), ";
+            } else if (outsourced.isSelected() && source.getText().matches(".*\\d.*")) {
+                errorMessage += "company name (a string without digits), ";
+            }
+            // removes comma at last error
+            errorMessage = errorMessage.substring(0, errorMessage.length() - 2);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Input");
+            alert.setHeaderText("Please enter valid input values.");
+            alert.setContentText(errorMessage);
+            alert.showAndWait();
+            return;
+        }
+        // check if max is less than min
+        if (partMax < partMin) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Input");
+            alert.setHeaderText("Input Error");
+            alert.setContentText("Max should be greater than or equal to Min.");
+            alert.showAndWait();
+            return;
+        }
+        // check if stock is between min and max values
+        if (partStock < partMin || partStock > partMax) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Input");
+            alert.setHeaderText("Input Error");
+            alert.setContentText("Inventory must be between minimum and max values.");
+            alert.showAndWait();
+            return;
+        }
+        // check radio button selection
+        if (inhouse.isSelected()) {
+            // cast partSource to int
+            int machineId = (int) partSource;
+            InHouse updatedPart = new InHouse(partId, partName, partPrice, partStock, partMin, partMax, machineId);
+            Inventory.updatePart(selectedPartIndex, updatedPart);
+        } else if (outsourced.isSelected()) {
+            // cast partSource to String
+            String companyName = (String) partSource;
+            Outsourced updatedPart = new Outsourced(partId, partName, partPrice, partStock, partMin, partMax, companyName);
+            Inventory.updatePart(selectedPartIndex, updatedPart);
+        }
+        switchToMainScene(event);
     }
 
     public void switchToMainScene(ActionEvent event) throws IOException {

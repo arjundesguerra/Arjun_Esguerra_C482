@@ -88,7 +88,7 @@ public class AddPartController {
         double partPrice = 0.0;
         int partMax = 0;
         int partMin = 0;
-        Object partSource = null; // store source as an Object
+        Object partSource = null;
 
         try {
             partStock = Integer.parseInt(stock.getText());

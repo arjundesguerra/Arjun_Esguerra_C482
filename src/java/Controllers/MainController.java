@@ -41,6 +41,8 @@ public class MainController implements Initializable {
     @FXML private TableColumn<Part, Integer> partInventoryColumn;
     @FXML private TableColumn<Part, Double> partPriceColumn;
 
+    private int selectedPartIndex = -1;
+
     public void initialize(URL location, ResourceBundle resourceBundle) {
         partTable.setItems(getAllParts());
         partIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -60,8 +62,9 @@ public class MainController implements Initializable {
     }
 
     private void deletePart() {
-        Part selectedPart = partTable.getSelectionModel().getSelectedItem();
-        if (selectedPart != null) {
+        selectedPartIndex = partTable.getSelectionModel().getSelectedIndex();
+        if (selectedPartIndex != -1) {
+            Part selectedPart = partTable.getItems().get(selectedPartIndex);
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation Dialog");
             alert.setHeaderText("Are you sure you want to delete this part?");
@@ -70,6 +73,7 @@ public class MainController implements Initializable {
             if (result.get() == ButtonType.OK) {
                 Inventory.deletePart(selectedPart);
                 partTable.getItems().remove(selectedPart);
+                selectedPartIndex = -1;
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -116,8 +120,8 @@ public class MainController implements Initializable {
     }
 
     public void switchToModifyPartScene(ActionEvent event) throws IOException {
-        Part selectedPart = partTable.getSelectionModel().getSelectedItem();
-        if (selectedPart == null) {
+        selectedPartIndex = partTable.getSelectionModel().getSelectedIndex();
+        if (selectedPartIndex == -1) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
@@ -128,7 +132,7 @@ public class MainController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("modify_part.fxml"));
         Parent root = loader.load();
         ModifyPartController modifyPartController = loader.getController();
-        modifyPartController.setPart(selectedPart);
+        modifyPartController.setPart(partTable.getItems().get(selectedPartIndex), selectedPartIndex);
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);

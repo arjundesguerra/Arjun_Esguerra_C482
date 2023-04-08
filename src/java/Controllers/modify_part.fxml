@@ -33,6 +33,6 @@
     <TextField fx:id="max" layoutX="173.0" layoutY="317.0" AnchorPane.leftAnchor="190.0" />
     <TextField fx:id="min" layoutX="410.0" layoutY="317.0" />
     <TextField fx:id="source" layoutX="173.0" layoutY="367.0" AnchorPane.leftAnchor="190.0" />
-    <Button layoutX="357.0" layoutY="425.0" mnemonicParsing="false" text="Save" />
+    <Button layoutX="357.0" layoutY="425.0" mnemonicParsing="false" onAction="#savePart" text="Save" />
     <Button layoutX="419.0" layoutY="425.0" mnemonicParsing="false" onAction="#switchToMainScene" text="Cancel" />
 </AnchorPane>
