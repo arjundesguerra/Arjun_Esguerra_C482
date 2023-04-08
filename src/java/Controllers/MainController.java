@@ -4,6 +4,8 @@ package Controllers;
 import Models.Inventory;
 import Models.Part;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,12 +15,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import static Models.Inventory.getAllParts;
 
@@ -27,7 +32,10 @@ public class MainController implements Initializable {
     private Stage stage;
     private Scene scene;
     @FXML
-    private Button deleteButton;
+    private Button partDeleteButton;
+
+    @FXML private TextField partSearch;
+
     @FXML private TableView<Part> partTable;
     @FXML private TableColumn<Part, Integer> partIdColumn;
     @FXML private TableColumn<Part, String> partNameColumn;
@@ -42,7 +50,7 @@ public class MainController implements Initializable {
         partPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         partTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        deleteButton.setOnAction(e -> {
+        partDeleteButton.setOnAction(e -> {
             Part selectedPart = partTable.getSelectionModel().getSelectedItem();
             if (selectedPart != null) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -62,7 +70,42 @@ public class MainController implements Initializable {
                 alert.showAndWait();
             }
         });
+
+        partSearch.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                searchParts(partSearch.getText());
+            }
+        });
     }
+
+    private void searchParts(String searchQuery) {
+        if (searchQuery == null || searchQuery.trim().isEmpty()) {
+            partTable.setItems(getAllParts());
+            return;
+        }
+
+        String lowercaseSearchQuery = searchQuery.toLowerCase();
+        List<Part> searchResult = Inventory.getAllParts()
+                .stream()
+                .filter(part ->
+                        part.getName().toLowerCase().contains(lowercaseSearchQuery) ||
+                                Integer.toString(part.getId()).contains(searchQuery))
+                .collect(Collectors.toList());
+
+        if (searchResult.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("No parts found for search query: " + searchQuery);
+            alert.showAndWait();
+        } else {
+            ObservableList<Part> searchResultList = FXCollections.observableArrayList(searchResult);
+            partTable.setItems(searchResultList);
+        }
+    }
+
+
+
 
 
     public void switchToAddPartScene(ActionEvent event) throws IOException {
