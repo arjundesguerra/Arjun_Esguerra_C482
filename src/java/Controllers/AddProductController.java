@@ -42,6 +42,8 @@ public class AddProductController {
     @FXML private TableColumn<Part, Integer> associatedPartsInventoryColumn;
     @FXML private TableColumn<Part, Double> associatedPartsPriceColumn;
     @FXML private Button addButton;
+
+    @FXML private Button removeButton;
     @FXML private Button saveButton;
 
     private ObservableList<Part> associatedPartList = FXCollections.observableArrayList();
@@ -80,7 +82,7 @@ public class AddProductController {
         return maxId + 1;
     }
 
-    public void addAssociatedPart(ActionEvent event) {
+    public void addToAssociatedPartTable(ActionEvent event) {
         Part selected = (Part) allPartsTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -93,6 +95,21 @@ public class AddProductController {
             associatedPartsTable.setItems(associatedPartList);
         }
     }
+
+    public void removeFromAssociatedPartTable(ActionEvent event) {
+        Part selected = (Part) associatedPartsTable.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            associatedPartList.remove(selected);
+            associatedPartsTable.setItems(associatedPartList);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a part to remove");
+            alert.showAndWait();
+        }
+    }
+
 
 
     public void switchToMainScene(ActionEvent event) throws IOException {
