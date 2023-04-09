@@ -171,7 +171,7 @@ public class AddPartController {
             newPart.setMin(partMin);
             newPart.setMax(partMax);
             newPart.setMachineId(machineId);
-            Inventory.getAllParts().add(newPart);
+            Inventory.addPart(newPart);
         } else if (outsourced.isSelected()) {
             // cast partSource to String
             String companyName = (String) partSource;
@@ -183,7 +183,7 @@ public class AddPartController {
             newPart.setMin(partMin);
             newPart.setMax(partMax);
             newPart.setCompanyName(companyName);
-            Inventory.getAllParts().add(newPart);
+            Inventory.addPart(newPart);
         }
         switchToMainScene(event);
     }
