@@ -10,12 +10,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
+import static Models.Inventory.getAllParts;
 
 public class AddProductController {
 
@@ -29,6 +30,11 @@ public class AddProductController {
     private TextField max;
     @FXML
     private TextField min;
+    @FXML private TableView allPartsTable;
+    @FXML private TableColumn<Part, Integer> allPartsIdColumn;
+    @FXML private TableColumn<Part, String> allPartsNameColumn;
+    @FXML private TableColumn<Part, Integer> allPartsInventoryColumn;
+    @FXML private TableColumn<Part, Double> allPartsPriceColumn;
     private Stage stage;
     private Scene scene;
 
@@ -39,6 +45,14 @@ public class AddProductController {
         // moves focus to save button
         saveButton.setFocusTraversable(true);
         Platform.runLater(() -> saveButton.requestFocus());
+
+        allPartsTable.setItems(getAllParts());
+        allPartsIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        allPartsNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        allPartsInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        allPartsPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        allPartsTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
     public static int autoId() {
