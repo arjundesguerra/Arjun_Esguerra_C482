@@ -30,7 +30,6 @@ public class Main extends Application {
         Inventory.addPart(outsource1);
         Inventory.addPart(outsource2);
 
-
         launch();
     }
 }
