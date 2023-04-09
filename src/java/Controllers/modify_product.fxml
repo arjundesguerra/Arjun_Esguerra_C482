@@ -13,7 +13,7 @@
     <children>
         <Pane layoutX="15.0" layoutY="15.0" prefHeight="561.0" prefWidth="806.0" style="-fx-border-color: black;">
             <children>
-                <Text layoutX="42.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Product" wrappingWidth="96.21630859375">
+                <Text layoutX="42.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modify Product" wrappingWidth="96.21630859375">
                     <font>
                         <Font name="Arial Bold" size="13.0" />
                     </font>
@@ -24,28 +24,32 @@
                 <Text layoutX="78.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price" />
                 <Text layoutX="78.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Max" />
                 <Text layoutX="220.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min" />
+                <TextField layoutX="599.0" layoutY="27.0" prefHeight="26.0" prefWidth="173.0" promptText="Search by Part ID or Name" />
                 <TextField layoutX="140.0" layoutY="103.0" />
                 <TextField layoutX="140.0" layoutY="148.0" />
                 <TextField layoutX="140.0" layoutY="193.0" prefHeight="26.0" prefWidth="63.0" />
                 <TextField layoutX="140.0" layoutY="238.0" prefHeight="26.0" prefWidth="63.0" />
                 <TextField layoutX="140.0" layoutY="283.0" prefHeight="26.0" prefWidth="63.0" />
                 <TextField layoutX="259.0" layoutY="283.0" prefHeight="26.0" prefWidth="63.0" />
-                <TextField layoutX="599.0" layoutY="27.0" prefHeight="26.0" prefWidth="173.0" promptText="ta" text="Search by Part ID or Name" />
                 <TableView layoutX="446.0" layoutY="71.0" prefHeight="180.0" prefWidth="332.0">
                     <columns>
-                        <TableColumn prefWidth="75.0" text="C1" />
-                        <TableColumn prefWidth="75.0" text="C2" />
+                        <TableColumn prefWidth="47.0" text="Part ID" />
+                        <TableColumn prefWidth="74.0" text="Part Name" />
+                  <TableColumn prefWidth="95.0" text="Inventory Level" />
+                  <TableColumn prefWidth="115.0" text="Price/Cost Per Unit" />
                     </columns>
                 </TableView>
                 <TableView layoutX="446.0" layoutY="296.0" prefHeight="180.0" prefWidth="332.0">
                     <columns>
-                        <TableColumn prefWidth="75.0" text="C1" />
-                        <TableColumn prefWidth="75.0" text="C2" />
+                        <TableColumn prefWidth="47.0" text="Part ID" />
+                        <TableColumn prefWidth="74.0" text="Part Name" />
+                        <TableColumn prefWidth="95.0" text="Inventory Level" />
+                        <TableColumn prefWidth="115.0" text="Price/Cost Per Unit" />
                     </columns>
                 </TableView>
                 <Button layoutX="686.0" layoutY="260.0" mnemonicParsing="false" text="Add" />
                 <Button layoutX="611.0" layoutY="484.0" mnemonicParsing="false" text="Remove Associated Part" />
-                <Button layoutX="612.0" layoutY="521.0" mnemonicParsing="false" text="Save" />
+                <Button fx:id="saveButton" layoutX="612.0" layoutY="521.0" mnemonicParsing="false" text="Save" />
                 <Button layoutX="706.0" layoutY="521.0" mnemonicParsing="false" onAction="#switchToMainScene" text="Cancel" />
             </children>
         </Pane>

@@ -34,6 +34,7 @@ public class MainController implements Initializable {
 
     @FXML private Button partModifyButton;
     @FXML private Button partDeleteButton;
+    @FXML private Button exitButton;
     @FXML private TextField partSearch;
     @FXML private TableView<Part> partTable;
     @FXML private TableColumn<Part, Integer> partIdColumn;
@@ -44,6 +45,10 @@ public class MainController implements Initializable {
     private int selectedPartIndex = -1;
 
     public void initialize(URL location, ResourceBundle resourceBundle) {
+        // moves focus to exit button
+        exitButton.setFocusTraversable(true);
+        Platform.runLater(() -> exitButton.requestFocus());
+
         partTable.setItems(getAllParts());
         partIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -59,6 +64,7 @@ public class MainController implements Initializable {
                 searchParts(partSearch.getText());
             }
         });
+
     }
 
     private void deletePart() {

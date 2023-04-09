@@ -4,6 +4,7 @@ import Models.InHouse;
 import Models.Inventory;
 import Models.Outsourced;
 import Models.Part;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -49,6 +50,10 @@ public class AddPartController {
 
 
     public void initialize() {
+        // moves focus to save button
+        saveButton.setFocusTraversable(true);
+        Platform.runLater(() -> saveButton.requestFocus());
+
         group1 = new ToggleGroup();
         inhouse.setToggleGroup(group1);
         outsourced.setToggleGroup(group1);

@@ -4,16 +4,14 @@ import Models.InHouse;
 import Models.Inventory;
 import Models.Outsourced;
 import Models.Part;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -36,6 +34,8 @@ public class ModifyPartController {
     @FXML
     private TextField source;
 
+    @FXML private Button saveButton;
+
     @FXML private ToggleGroup group1;
 
     @FXML private RadioButton inhouse;
@@ -50,6 +50,10 @@ public class ModifyPartController {
     private int selectedPartIndex;
 
     public void initialize() {
+        // moves focus to save button
+        saveButton.setFocusTraversable(true);
+        Platform.runLater(() -> saveButton.requestFocus());
+
         group1 = new ToggleGroup();
         inhouse.setToggleGroup(group1);
         outsourced.setToggleGroup(group1);

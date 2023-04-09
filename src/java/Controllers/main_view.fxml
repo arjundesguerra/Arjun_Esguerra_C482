@@ -44,8 +44,8 @@
                   <columns>
                      <TableColumn fx:id="productIdColumn" prefWidth="75.0" text="Product ID" />
                      <TableColumn fx:id="productNameColumn" prefWidth="89.0" text="Product Name" />
-                     <TableColumn fx:id="productInventoryColumn" prefWidth="97.0" text="Inventory Level" />
-                     <TableColumn fx:id="productPriceColumn" prefWidth="110.0" text="Price/Cost Per Unit" />
+                     <TableColumn fx:id="productInventoryColumn" prefWidth="91.0" text="Inventory Level" />
+                     <TableColumn fx:id="productPriceColumn" prefWidth="116.0" text="Price/Cost Per Unit" />
                   </columns>
                </TableView>
                <TextField layoutX="238.0" layoutY="14.0" prefHeight="26.0" prefWidth="182.0" promptText="Search by Product ID or Name" />
