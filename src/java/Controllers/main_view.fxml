@@ -48,7 +48,7 @@
                      <TableColumn fx:id="productPriceColumn" prefWidth="112.0" text="Price/Cost Per Unit" />
                   </columns>
                </TableView>
-               <TextField layoutX="238.0" layoutY="14.0" prefHeight="26.0" prefWidth="182.0" promptText="Search by Product ID or Name" />
+               <TextField fx:id="productSearch" layoutX="238.0" layoutY="14.0" prefHeight="26.0" prefWidth="182.0" promptText="Search by Product ID or Name" />
                <Button layoutX="228.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToAddProductScene" text="Add" />
                <Button layoutX="285.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToModifyProductScene" text="Modify" />
                <Button layoutX="357.0" layoutY="287.0" mnemonicParsing="false" onAction="#deleteProduct" text="Delete" />

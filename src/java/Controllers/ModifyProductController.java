@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -35,6 +36,8 @@ public class ModifyProductController {
     private TextField max;
     @FXML
     private TextField min;
+
+    @FXML private TextField partSearch;
     @FXML private TableView allPartsTable;
     @FXML private TableColumn<Part, Integer> allPartsIdColumn;
     @FXML private TableColumn<Part, String> allPartsNameColumn;
@@ -87,6 +90,43 @@ public class ModifyProductController {
         //adds all associated parts to the part list
         for (Part part : product.getAllAssociatedParts()) {
             associatedPartList.add(part);
+        }
+
+        partSearch.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                searchParts(partSearch.getText());
+            }
+        });
+    }
+
+    private void searchParts(String searchQuery) {
+        if (searchQuery == null || searchQuery.trim().isEmpty()) {
+            allPartsTable.setItems(getAllParts());
+            return;
+        }
+
+        String lowercaseSearchQuery = searchQuery.toLowerCase();
+        ObservableList<Part> searchResult;
+        try {
+            int partId = Integer.parseInt(searchQuery);
+            Part part = Inventory.lookupPart(partId);
+            if (part != null) {
+                searchResult = FXCollections.observableArrayList(part);
+            } else {
+                searchResult = FXCollections.emptyObservableList();
+            }
+        } catch (NumberFormatException e) {
+            searchResult = Inventory.lookupPart(lowercaseSearchQuery);
+        }
+
+        if (searchResult.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("No parts found for search query: " + searchQuery);
+            alert.showAndWait();
+        } else {
+            allPartsTable.setItems(searchResult);
         }
     }
 

@@ -36,6 +36,7 @@ public class MainController implements Initializable {
     @FXML private Button partDeleteButton;
     @FXML private Button exitButton;
     @FXML private TextField partSearch;
+    @FXML private TextField productSearch;
     @FXML private TableView<Part> partTable;
     @FXML private TableColumn<Part, Integer> partIdColumn;
     @FXML private TableColumn<Part, String> partNameColumn;
@@ -70,10 +71,16 @@ public class MainController implements Initializable {
 
 
         partTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        
+
         partSearch.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 searchParts(partSearch.getText());
+            }
+        });
+
+        productSearch.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                searchProducts(productSearch.getText());
             }
         });
 
@@ -153,6 +160,37 @@ public class MainController implements Initializable {
             alert.showAndWait();
         } else {
             partTable.setItems(searchResult);
+        }
+    }
+
+    private void searchProducts(String searchQuery) {
+        if (searchQuery == null || searchQuery.trim().isEmpty()) {
+            productTable.setItems(getAllProducts());
+            return;
+        }
+
+        String lowercaseSearchQuery = searchQuery.toLowerCase();
+        ObservableList<Product> searchResult;
+        try {
+            int productId = Integer.parseInt(searchQuery);
+            Product product = Inventory.lookupProduct(productId);
+            if (product != null) {
+                searchResult = FXCollections.observableArrayList(product);
+            } else {
+                searchResult = FXCollections.emptyObservableList();
+            }
+        } catch (NumberFormatException e) {
+            searchResult = Inventory.lookupProduct(lowercaseSearchQuery);
+        }
+
+        if (searchResult.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("No parts found for search query: " + searchQuery);
+            alert.showAndWait();
+        } else {
+            productTable.setItems(searchResult);
         }
     }
 

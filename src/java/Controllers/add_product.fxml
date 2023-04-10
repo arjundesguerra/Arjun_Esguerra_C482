@@ -24,7 +24,7 @@
             <Text layoutX="78.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price" />
             <Text layoutX="78.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Max" />
             <Text layoutX="220.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min" />
-            <TextField layoutX="599.0" layoutY="27.0" prefHeight="26.0" prefWidth="173.0" promptText="Search by Part ID or Name" />
+            <TextField fx:id="partSearch" layoutX="599.0" layoutY="27.0" prefHeight="26.0" prefWidth="173.0" promptText="Search by Part ID or Name" />
             <TextField editable="false" layoutX="140.0" layoutY="103.0" promptText="Auto Gen - Disabled" />
             <TextField fx:id="name" layoutX="140.0" layoutY="148.0" />
             <TextField fx:id="stock" layoutX="140.0" layoutY="193.0" prefHeight="26.0" prefWidth="63.0" />
