@@ -113,15 +113,23 @@ public class MainController implements Initializable {
         selectedProductIndex = productTable.getSelectionModel().getSelectedIndex();
         if (selectedProductIndex != -1) {
             Product selectedProduct = productTable.getItems().get(selectedProductIndex);
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirmation Dialog");
-            alert.setHeaderText("Are you sure you want to delete this product?");
-            alert.setContentText("Press OK to confirm or Cancel to go back.");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                Inventory.deleteProduct(selectedProduct);
-                productTable.getItems().remove(selectedProduct);
-                selectedPartIndex = -1;
+            if (selectedProduct.getAllAssociatedParts().size() > 0) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("This product can't be deleted because it has associated part(s).");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText("Are you sure you want to delete this product?");
+                alert.setContentText("Press OK to confirm or Cancel to go back.");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    Inventory.deleteProduct(selectedProduct);
+                    productTable.getItems().remove(selectedProduct);
+                    selectedPartIndex = -1;
+                }
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);

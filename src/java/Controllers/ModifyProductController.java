@@ -154,7 +154,9 @@ public class ModifyProductController {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 associatedPartList.remove(selected);
+                product.deleteAssociatedPart(selected);
                 associatedPartsTable.setItems(associatedPartList);
+
             } else {
                 Alert nullError = new Alert(Alert.AlertType.ERROR);
                 nullError.setTitle("Error");
