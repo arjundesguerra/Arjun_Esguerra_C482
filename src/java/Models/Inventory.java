@@ -76,7 +76,7 @@ public class Inventory {
         }
     }
 
-    public static boolean deleteProduct(Part selectedProduct) {
+    public static boolean deleteProduct(Product selectedProduct) {
         if (allProducts.contains(selectedProduct)) {
             allProducts.remove(selectedProduct);
             return true;

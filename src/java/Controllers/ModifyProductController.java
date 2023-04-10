@@ -84,6 +84,7 @@ public class ModifyProductController {
         associatedPartsInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         associatedPartsPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+        //adds all associated parts to the part list
         for (Part part : product.getAllAssociatedParts()) {
             associatedPartList.add(part);
         }
@@ -99,7 +100,7 @@ public class ModifyProductController {
             alert.showAndWait();
         } else if (!associatedPartList.contains(selected)) {
             associatedPartList.add(selected);
-            associatedPartsTable.setItems(associatedPartList); // add the new item to the table
+            associatedPartsTable.setItems(associatedPartList);
         }
     }
 

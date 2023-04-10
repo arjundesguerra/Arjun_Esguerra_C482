@@ -30,7 +30,7 @@
                <TextField fx:id="partSearch" layoutX="259.0" layoutY="14.0" prefHeight="26.0" prefWidth="162.0" promptText="Search by Part ID or Name" />
                <Button fx:id="partAddButton" layoutX="228.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToAddPartScene" text="Add" />
                <Button fx:id="partModifyButton" layoutX="285.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToModifyPartScene" text="Modify" />
-               <Button fx:id="partDeleteButton" layoutX="357.0" layoutY="287.0" mnemonicParsing="false" text="Delete" />
+               <Button fx:id="partDeleteButton" layoutX="357.0" layoutY="287.0" mnemonicParsing="false" onAction="#deletePart" text="Delete" />
                <Text layoutX="48.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parts">
                   <font>
                      <Font name="Arial Bold" size="13.0" />
@@ -51,7 +51,7 @@
                <TextField layoutX="238.0" layoutY="14.0" prefHeight="26.0" prefWidth="182.0" promptText="Search by Product ID or Name" />
                <Button layoutX="228.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToAddProductScene" text="Add" />
                <Button layoutX="285.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToModifyProductScene" text="Modify" />
-               <Button layoutX="357.0" layoutY="287.0" mnemonicParsing="false" text="Delete" />
+               <Button layoutX="357.0" layoutY="287.0" mnemonicParsing="false" onAction="#deleteProduct" text="Delete" />
                <Text layoutX="48.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Products">
                   <font>
                      <Font name="Arial Bold" size="13.0" />

@@ -68,12 +68,12 @@ public class AddProductController {
     }
 
     public static int autoId() {
-        ObservableList<Part> allParts = Inventory.getAllParts();
+        ObservableList<Product> allProducts = Inventory.getAllProducts();
         int maxId = 0;
-        for(Part part: allParts) {
-            int partId = part.getId();
-            if (partId > maxId) {
-                maxId = partId;
+        for(Product products: allProducts) {
+            int productId = products.getId();
+            if (productId > maxId) {
+                maxId = productId;
             }
         }
         return maxId + 1;

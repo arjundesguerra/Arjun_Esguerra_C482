@@ -70,9 +70,7 @@ public class MainController implements Initializable {
 
 
         partTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
-        partDeleteButton.setOnAction(e -> deletePart());
-
+        
         partSearch.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 searchParts(partSearch.getText());
@@ -81,7 +79,7 @@ public class MainController implements Initializable {
 
     }
 
-    private void deletePart() {
+    public void deletePart() {
         selectedPartIndex = partTable.getSelectionModel().getSelectedIndex();
         if (selectedPartIndex != -1) {
             Part selectedPart = partTable.getItems().get(selectedPartIndex);
@@ -100,6 +98,29 @@ public class MainController implements Initializable {
             alert.setTitle("Error");
             alert.setHeaderText(null);
             alert.setContentText("Please select a part to delete.");
+            alert.showAndWait();
+        }
+    }
+
+    public void deleteProduct() {
+        selectedProductIndex = productTable.getSelectionModel().getSelectedIndex();
+        if (selectedProductIndex != -1) {
+            Product selectedProduct = productTable.getItems().get(selectedProductIndex);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText("Are you sure you want to delete this product?");
+            alert.setContentText("Press OK to confirm or Cancel to go back.");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                Inventory.deleteProduct(selectedProduct);
+                productTable.getItems().remove(selectedProduct);
+                selectedPartIndex = -1;
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a product to delete.");
             alert.showAndWait();
         }
     }
@@ -134,8 +155,6 @@ public class MainController implements Initializable {
             partTable.setItems(searchResult);
         }
     }
-
-    public static int getProductIndex() { return selectedPartIndex; }
 
     public void switchToAddPartScene(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("add_part.fxml"));
