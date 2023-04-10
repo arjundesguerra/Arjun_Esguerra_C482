@@ -43,9 +43,6 @@ public class AddProductController {
     @FXML private TableColumn<Part, String> associatedPartsNameColumn;
     @FXML private TableColumn<Part, Integer> associatedPartsInventoryColumn;
     @FXML private TableColumn<Part, Double> associatedPartsPriceColumn;
-    @FXML private Button addButton;
-
-    @FXML private Button removeButton;
     @FXML private Button saveButton;
 
     private ObservableList<Part> associatedPartList = FXCollections.observableArrayList();

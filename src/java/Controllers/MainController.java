@@ -47,7 +47,7 @@ public class MainController implements Initializable {
     @FXML private TableColumn<Part, Integer> productInventoryColumn;
     @FXML private TableColumn<Part, Double> productPriceColumn;
 
-    private int selectedPartIndex = -1;
+    private static int selectedPartIndex = -1;
 
     private int selectedProductIndex = -1;
 
@@ -134,6 +134,8 @@ public class MainController implements Initializable {
             partTable.setItems(searchResult);
         }
     }
+
+    public static int getProductIndex() { return selectedPartIndex; }
 
     public void switchToAddPartScene(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("add_part.fxml"));

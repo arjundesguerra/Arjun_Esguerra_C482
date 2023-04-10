@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import static Models.Inventory.getAllProducts;
+import static Models.Inventory.getAllParts;
 
 public class ModifyProductController {
 
@@ -50,7 +50,6 @@ public class ModifyProductController {
     private Stage stage;
     private Scene scene;
     private Product product;
-
     private int selectedProductIndex;
 
     public void initialize() {
@@ -58,6 +57,11 @@ public class ModifyProductController {
         saveButton.setFocusTraversable(true);
         Platform.runLater(() -> saveButton.requestFocus());
 
+        allPartsTable.setItems(getAllParts());
+        allPartsIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        allPartsNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        allPartsInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        allPartsPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
     public void setProduct(Product product, int selectedProductIndex) {
@@ -69,6 +73,12 @@ public class ModifyProductController {
         max.setText(Integer.toString(product.getMax()));
         min.setText(Integer.toString(product.getMin()));
         this.selectedProductIndex = selectedProductIndex;
+
+        associatedPartsTable.setItems(product.getAllAssociatedParts());
+        associatedPartsIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        associatedPartsNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        associatedPartsInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        associatedPartsPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
     public void switchToMainScene(ActionEvent event) throws IOException {
