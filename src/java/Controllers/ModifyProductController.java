@@ -1,5 +1,6 @@
 package Controllers;
 
+import Models.Inventory;
 import Models.Part;
 import Models.Product;
 import javafx.application.Platform;
@@ -82,6 +83,10 @@ public class ModifyProductController {
         associatedPartsNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         associatedPartsInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         associatedPartsPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        for (Part part : product.getAllAssociatedParts()) {
+            associatedPartList.add(part);
+        }
     }
 
     public void addToAssociatedPartTable(ActionEvent event) {
@@ -94,7 +99,7 @@ public class ModifyProductController {
             alert.showAndWait();
         } else if (!associatedPartList.contains(selected)) {
             associatedPartList.add(selected);
-            associatedPartsTable.setItems(associatedPartList);
+            associatedPartsTable.setItems(associatedPartList); // add the new item to the table
         }
     }
 
@@ -117,6 +122,79 @@ public class ModifyProductController {
                 nullError.showAndWait();
             }
         }
+    }
+
+    public void saveProduct(ActionEvent event) throws IOException {
+        int productId = 0;
+        String productName = null;
+        int productStock = 0;
+        double productPrice = 0.0;
+        int productMax = 0;
+        int productMin = 0;
+
+        try {
+            productId = Integer.parseInt(id.getText());
+            productName = name.getText();
+            productStock = Integer.parseInt(stock.getText());
+            productPrice = Double.parseDouble(price.getText());
+            productMax = Integer.parseInt(max.getText());
+            productMin = Integer.parseInt(min.getText());
+        } catch (NumberFormatException e) {
+            String errorMessage = "Please enter a valid value for ";
+            if (!productName.matches("^[a-zA-Z ]+$")) {
+                errorMessage += "name (a string), ";
+            }
+            if (!stock.getText().matches("\\d+")) {
+                errorMessage += "stock (an integer), ";
+            }
+            if (!price.getText().matches("\\d+(\\.\\d+)?")) {
+                errorMessage += "price (a double), ";
+            }
+            if (!max.getText().matches("\\d+")) {
+                errorMessage += "max (an integer), ";
+            }
+            if (!min.getText().matches("\\d+")) {
+                errorMessage += "min (an integer), ";
+            }
+            // removes comma at last error
+            errorMessage = errorMessage.substring(0, errorMessage.length() - 2);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Input");
+            alert.setHeaderText("Please enter valid input values.");
+            alert.setContentText(errorMessage);
+            alert.showAndWait();
+            return;
+        }
+        // check if max is less than min
+        if (productMax < productMin) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Input");
+            alert.setHeaderText("Input Error");
+            alert.setContentText("Max should be greater than or equal to Min.");
+            alert.showAndWait();
+            return;
+        }
+        // check if stock is between min and max values
+        if (productStock < productMin || productStock > productMax) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Input");
+            alert.setHeaderText("Input Error");
+            alert.setContentText("Inventory must be between minimum and max values.");
+            alert.showAndWait();
+            return;
+        }
+        Product updatedProduct = new Product(0, null, 0, 0, 0, 0);
+        updatedProduct.setId(productId);
+        updatedProduct.setName(productName);
+        updatedProduct.setPrice(productPrice);
+        updatedProduct.setStock(productStock);
+        updatedProduct.setMin(productMin);
+        updatedProduct.setMax(productMax);
+        for (Part part : associatedPartList) {
+            updatedProduct.addAssociatedPart(part);
+        }
+        Inventory.updateProduct(selectedProductIndex, updatedProduct);
+        switchToMainScene(event);
     }
 
     public void switchToMainScene(ActionEvent event) throws IOException {

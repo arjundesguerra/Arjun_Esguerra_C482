@@ -114,7 +114,6 @@ public class AddProductController {
         }
     }
 
-    // grab all parts from associated part table and call addAssociatedPart on each one.
     public void saveProduct(ActionEvent event) throws IOException {
         String productName = null;
         int productStock = 0;
