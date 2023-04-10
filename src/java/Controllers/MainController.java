@@ -97,12 +97,18 @@ public class MainController implements Initializable {
         }
 
         String lowercaseSearchQuery = searchQuery.toLowerCase();
-        List<Part> searchResult = Inventory.getAllParts()
-                .stream()
-                .filter(part ->
-                        part.getName().toLowerCase().contains(lowercaseSearchQuery) ||
-                                Integer.toString(part.getId()).contains(searchQuery))
-                .collect(Collectors.toList());
+        ObservableList<Part> searchResult;
+        try {
+            int partId = Integer.parseInt(searchQuery);
+            Part part = Inventory.lookupPart(partId);
+            if (part != null) {
+                searchResult = FXCollections.observableArrayList(part);
+            } else {
+                searchResult = FXCollections.emptyObservableList();
+            }
+        } catch (NumberFormatException e) {
+            searchResult = Inventory.lookupPart(lowercaseSearchQuery);
+        }
 
         if (searchResult.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -111,8 +117,7 @@ public class MainController implements Initializable {
             alert.setContentText("No parts found for search query: " + searchQuery);
             alert.showAndWait();
         } else {
-            ObservableList<Part> searchResultList = FXCollections.observableArrayList(searchResult);
-            partTable.setItems(searchResultList);
+            partTable.setItems(searchResult);
         }
     }
 

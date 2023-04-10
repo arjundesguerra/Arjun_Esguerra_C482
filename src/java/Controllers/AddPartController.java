@@ -88,7 +88,7 @@ public class AddPartController {
     }
 
     public void savePart(ActionEvent event) throws IOException {
-        String partName = name.getText();
+        String partName = null;
         int partStock = 0;
         double partPrice = 0.0;
         int partMax = 0;
@@ -96,6 +96,7 @@ public class AddPartController {
         Object partSource = null;
 
         try {
+            partName = name.getText();
             partStock = Integer.parseInt(stock.getText());
             partPrice = Double.parseDouble(price.getText());
             partMax = Integer.parseInt(max.getText());
