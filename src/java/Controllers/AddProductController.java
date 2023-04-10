@@ -44,9 +44,7 @@ public class AddProductController {
     @FXML private TableColumn<Part, Integer> associatedPartsInventoryColumn;
     @FXML private TableColumn<Part, Double> associatedPartsPriceColumn;
     @FXML private Button saveButton;
-
     private ObservableList<Part> associatedPartList = FXCollections.observableArrayList();
-
     private Stage stage;
     private Scene scene;
 

@@ -3,20 +3,20 @@ package Controllers;
 import Models.Part;
 import Models.Product;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import static Models.Inventory.getAllParts;
 
@@ -52,6 +52,9 @@ public class ModifyProductController {
     private Product product;
     private int selectedProductIndex;
 
+    private ObservableList<Part> associatedPartList = FXCollections.observableArrayList();
+
+
     public void initialize() {
         // moves focus to save button
         saveButton.setFocusTraversable(true);
@@ -79,6 +82,41 @@ public class ModifyProductController {
         associatedPartsNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         associatedPartsInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         associatedPartsPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+    }
+
+    public void addToAssociatedPartTable(ActionEvent event) {
+        Part selected = (Part) allPartsTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a part");
+            alert.showAndWait();
+        } else if (!associatedPartList.contains(selected)) {
+            associatedPartList.add(selected);
+            associatedPartsTable.setItems(associatedPartList);
+        }
+    }
+
+    public void removeFromAssociatedPartTable(ActionEvent event) {
+        Part selected = (Part) associatedPartsTable.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText("Are you sure you want to remove this part?");
+            alert.setContentText("Press OK to confirm or Cancel to go back.");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                associatedPartList.remove(selected);
+                associatedPartsTable.setItems(associatedPartList);
+            } else {
+                Alert nullError = new Alert(Alert.AlertType.ERROR);
+                nullError.setTitle("Error");
+                nullError.setHeaderText(null);
+                nullError.setContentText("Please select a part to remove");
+                nullError.showAndWait();
+            }
+        }
     }
 
     public void switchToMainScene(ActionEvent event) throws IOException {

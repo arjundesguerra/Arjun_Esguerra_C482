@@ -25,7 +25,7 @@
                 <Text layoutX="78.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Max" />
                 <Text layoutX="220.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min" />
                 <TextField layoutX="599.0" layoutY="27.0" prefHeight="26.0" prefWidth="173.0" promptText="Search by Part ID or Name" />
-                <TextField fx:id="id" editable="false" layoutX="140.0" layoutY="103.0"/>
+                <TextField fx:id="id" editable="false" layoutX="140.0" layoutY="103.0" />
                 <TextField fx:id="name" layoutX="140.0" layoutY="148.0" />
                 <TextField fx:id="stock" layoutX="140.0" layoutY="193.0" prefHeight="26.0" prefWidth="63.0" />
                 <TextField fx:id="price" layoutX="140.0" layoutY="238.0" prefHeight="26.0" prefWidth="63.0" />
@@ -47,8 +47,8 @@
                         <TableColumn fx:id="associatedPartsPriceColumn" prefWidth="115.0" text="Price/Cost Per Unit" />
                     </columns>
                 </TableView>
-                <Button layoutX="686.0" layoutY="260.0" mnemonicParsing="false" text="Add" />
-                <Button layoutX="611.0" layoutY="484.0" mnemonicParsing="false" text="Remove Associated Part" />
+                <Button layoutX="686.0" layoutY="260.0" mnemonicParsing="false" onAction="#addToAssociatedPartTable" text="Add" />
+                <Button layoutX="611.0" layoutY="484.0" mnemonicParsing="false" onAction="#removeFromAssociatedPartTable" text="Remove Associated Part" />
                 <Button fx:id="saveButton" layoutX="612.0" layoutY="521.0" mnemonicParsing="false" text="Save" />
                 <Button layoutX="706.0" layoutY="521.0" mnemonicParsing="false" onAction="#switchToMainScene" text="Cancel" />
             </children>
