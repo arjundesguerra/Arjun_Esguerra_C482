@@ -1,5 +1,7 @@
 package Controllers;
 
+import Models.Part;
+import Models.Product;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,12 +10,20 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static Models.Inventory.getAllProducts;
+
 public class ModifyProductController {
+
+    @FXML private TextField id;
+
     @FXML
     private TextField name;
     @FXML
@@ -24,18 +34,43 @@ public class ModifyProductController {
     private TextField max;
     @FXML
     private TextField min;
-    @FXML
-    private TextField source;
-
+    @FXML private TableView allPartsTable;
+    @FXML private TableColumn<Part, Integer> allPartsIdColumn;
+    @FXML private TableColumn<Part, String> allPartsNameColumn;
+    @FXML private TableColumn<Part, Integer> allPartsInventoryColumn;
+    @FXML private TableColumn<Part, Double> allPartsPriceColumn;
+    @FXML private TableView associatedPartsTable;
+    @FXML private TableColumn<Part, Integer> associatedPartsIdColumn;
+    @FXML private TableColumn<Part, String> associatedPartsNameColumn;
+    @FXML private TableColumn<Part, Integer> associatedPartsInventoryColumn;
+    @FXML private TableColumn<Part, Double> associatedPartsPriceColumn;
+    @FXML private Button addButton;
+    @FXML private Button removeButton;
     @FXML private Button saveButton;
     private Stage stage;
     private Scene scene;
+    private Product product;
+
+    private int selectedProductIndex;
 
     public void initialize() {
         // moves focus to save button
         saveButton.setFocusTraversable(true);
         Platform.runLater(() -> saveButton.requestFocus());
+
     }
+
+    public void setProduct(Product product, int selectedProductIndex) {
+        this.product = product;
+        id.setText(Integer.toString(product.getId()));
+        name.setText(product.getName());
+        stock.setText(Integer.toString(product.getStock()));
+        price.setText(Double.toString(product.getPrice()));
+        max.setText(Integer.toString(product.getMax()));
+        min.setText(Integer.toString(product.getMin()));
+        this.selectedProductIndex = selectedProductIndex;
+    }
+
     public void switchToMainScene(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("main_view.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

@@ -25,26 +25,26 @@
                 <Text layoutX="78.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Max" />
                 <Text layoutX="220.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min" />
                 <TextField layoutX="599.0" layoutY="27.0" prefHeight="26.0" prefWidth="173.0" promptText="Search by Part ID or Name" />
-                <TextField layoutX="140.0" layoutY="103.0" />
-                <TextField layoutX="140.0" layoutY="148.0" />
-                <TextField layoutX="140.0" layoutY="193.0" prefHeight="26.0" prefWidth="63.0" />
-                <TextField layoutX="140.0" layoutY="238.0" prefHeight="26.0" prefWidth="63.0" />
-                <TextField layoutX="140.0" layoutY="283.0" prefHeight="26.0" prefWidth="63.0" />
-                <TextField layoutX="259.0" layoutY="283.0" prefHeight="26.0" prefWidth="63.0" />
-                <TableView layoutX="446.0" layoutY="71.0" prefHeight="180.0" prefWidth="332.0">
+                <TextField fx:id="id" editable="false" layoutX="140.0" layoutY="103.0"/>
+                <TextField fx:id="name" layoutX="140.0" layoutY="148.0" />
+                <TextField fx:id="stock" layoutX="140.0" layoutY="193.0" prefHeight="26.0" prefWidth="63.0" />
+                <TextField fx:id="price" layoutX="140.0" layoutY="238.0" prefHeight="26.0" prefWidth="63.0" />
+                <TextField fx:id="max" layoutX="140.0" layoutY="283.0" prefHeight="26.0" prefWidth="63.0" />
+                <TextField fx:id="min" layoutX="259.0" layoutY="283.0" prefHeight="26.0" prefWidth="63.0" />
+                <TableView fx:id="allPartsTable" layoutX="446.0" layoutY="71.0" prefHeight="180.0" prefWidth="332.0">
                     <columns>
-                        <TableColumn prefWidth="47.0" text="Part ID" />
-                        <TableColumn prefWidth="74.0" text="Part Name" />
-                  <TableColumn prefWidth="95.0" text="Inventory Level" />
-                  <TableColumn prefWidth="115.0" text="Price/Cost Per Unit" />
+                        <TableColumn fx:id="allPartsIdColumn" prefWidth="47.0" text="Part ID" />
+                        <TableColumn fx:id="allPartsNameColumn" prefWidth="74.0" text="Part Name" />
+                        <TableColumn fx:id="allPartsInventoryColumn" prefWidth="95.0" text="Inventory Level" />
+                        <TableColumn fx:id="allPartsPriceColumn" prefWidth="115.0" text="Price/Cost Per Unit" />
                     </columns>
                 </TableView>
-                <TableView layoutX="446.0" layoutY="296.0" prefHeight="180.0" prefWidth="332.0">
+                <TableView fx:id="associatedPartsTable" layoutX="446.0" layoutY="296.0" prefHeight="180.0" prefWidth="332.0">
                     <columns>
-                        <TableColumn prefWidth="47.0" text="Part ID" />
-                        <TableColumn prefWidth="74.0" text="Part Name" />
-                        <TableColumn prefWidth="95.0" text="Inventory Level" />
-                        <TableColumn prefWidth="115.0" text="Price/Cost Per Unit" />
+                        <TableColumn fx:id="associatedPartsIdColumn" prefWidth="47.0" text="Part ID" />
+                        <TableColumn fx:id="associatedPartsNameColumn" prefWidth="74.0" text="Part Name" />
+                        <TableColumn fx:id="associatedPartsInventoryColumn" prefWidth="95.0" text="Inventory Level" />
+                        <TableColumn fx:id="associatedPartsPriceColumn" prefWidth="115.0" text="Price/Cost Per Unit" />
                     </columns>
                 </TableView>
                 <Button layoutX="686.0" layoutY="260.0" mnemonicParsing="false" text="Add" />

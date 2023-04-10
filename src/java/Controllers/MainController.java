@@ -49,6 +49,8 @@ public class MainController implements Initializable {
 
     private int selectedPartIndex = -1;
 
+    private int selectedProductIndex = -1;
+
     public void initialize(URL location, ResourceBundle resourceBundle) {
         // moves focus to exit button
         exitButton.setFocusTraversable(true);
@@ -65,7 +67,6 @@ public class MainController implements Initializable {
         productNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         productInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         productPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-
 
 
         partTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -175,7 +176,20 @@ public class MainController implements Initializable {
     }
 
     public void switchToModifyProductScene(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("modify_product.fxml"));
+        selectedProductIndex = productTable.getSelectionModel().getSelectedIndex();
+        if (selectedProductIndex == -1) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a product to modify.");
+            alert.showAndWait();
+            return;
+        }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("modify_product.fxml"));
+        Parent root = loader.load();
+        ModifyProductController modifyProductController = loader.getController();
+        modifyProductController.setProduct(productTable.getItems().get(selectedProductIndex), selectedProductIndex);
+
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
