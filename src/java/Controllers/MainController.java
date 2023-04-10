@@ -3,6 +3,7 @@ package Controllers;
 
 import Models.Inventory;
 import Models.Part;
+import Models.Product;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,12 +21,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 import static Models.Inventory.getAllParts;
+import static Models.Inventory.getAllProducts;
 
 public class MainController implements Initializable {
 
@@ -41,6 +41,11 @@ public class MainController implements Initializable {
     @FXML private TableColumn<Part, String> partNameColumn;
     @FXML private TableColumn<Part, Integer> partInventoryColumn;
     @FXML private TableColumn<Part, Double> partPriceColumn;
+    @FXML private TableView<Product> productTable;
+    @FXML private TableColumn<Part, Integer> productIdColumn;
+    @FXML private TableColumn<Part, String> productNameColumn;
+    @FXML private TableColumn<Part, Integer> productInventoryColumn;
+    @FXML private TableColumn<Part, Double> productPriceColumn;
 
     private int selectedPartIndex = -1;
 
@@ -54,6 +59,14 @@ public class MainController implements Initializable {
         partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         partPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        productTable.setItems(getAllProducts());
+        productIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        productNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        productInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        productPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+
 
         partTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 

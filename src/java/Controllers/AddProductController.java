@@ -119,6 +119,7 @@ public class AddProductController {
         }
     }
 
+    // grab all parts from associated part table and call addAssociatedPart on each one.
     public void saveProduct(ActionEvent event) throws IOException {
         String productName = null;
         int productStock = 0;
@@ -183,7 +184,11 @@ public class AddProductController {
         newProduct.setStock(productStock);
         newProduct.setMin(productMin);
         newProduct.setMax(productMax);
+        for (Part part : associatedPartList) {
+            newProduct.addAssociatedPart(part);
+        }
         Inventory.addProduct(newProduct);
+        switchToMainScene(event);
     }
 
     public void switchToMainScene(ActionEvent event) throws IOException {

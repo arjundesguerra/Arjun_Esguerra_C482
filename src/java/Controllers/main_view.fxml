@@ -40,7 +40,7 @@
          </Pane>
          <Pane layoutX="551.0" layoutY="127.0" prefHeight="320.0" prefWidth="468.0" style="-fx-border-color: black;">
             <children>
-               <TableView layoutX="48.0" layoutY="59.0" prefHeight="220.0" prefWidth="372.0">
+               <TableView fx:id="productTable" layoutX="48.0" layoutY="59.0" prefHeight="220.0" prefWidth="372.0">
                   <columns>
                      <TableColumn fx:id="productIdColumn" prefWidth="64.0" text="Product ID" />
                      <TableColumn fx:id="productNameColumn" prefWidth="103.0" text="Product Name" />

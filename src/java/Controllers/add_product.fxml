@@ -49,7 +49,7 @@
             </TableView>
             <Button fx:id="addButton" layoutX="686.0" layoutY="260.0" mnemonicParsing="false" onAction="#addToAssociatedPartTable" text="Add" />
             <Button fx:id="removeButton" layoutX="611.0" layoutY="484.0" mnemonicParsing="false" onAction="#removeFromAssociatedPartTable" text="Remove Associated Part" />
-            <Button fx:id="saveButton" layoutX="612.0" layoutY="521.0" mnemonicParsing="false" text="Save" />
+            <Button fx:id="saveButton" layoutX="612.0" layoutY="521.0" mnemonicParsing="false" onAction="#saveProduct" text="Save" />
             <Button layoutX="706.0" layoutY="521.0" mnemonicParsing="false" onAction="#switchToMainScene" text="Cancel" />
          </children>
       </Pane>
