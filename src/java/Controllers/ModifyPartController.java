@@ -17,38 +17,32 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * The AddPartController class manages the functionality for modifying a selected part in the inventory.
+ */
 public class ModifyPartController {
 
-    @FXML
-    private TextField id;
-    @FXML
-    private TextField name;
-    @FXML
-    private TextField stock;
-    @FXML
-    private TextField price;
-    @FXML
-    private TextField max;
-    @FXML
-    private TextField min;
-    @FXML
-    private TextField source;
-
+    @FXML private TextField id;
+    @FXML private TextField name;
+    @FXML private TextField stock;
+    @FXML private TextField price;
+    @FXML private TextField max;
+    @FXML private TextField min;
+    @FXML private TextField source;
     @FXML private Button saveButton;
-
     @FXML private ToggleGroup group1;
-
     @FXML private RadioButton inhouse;
-
     @FXML private RadioButton outsourced;
-
     @FXML private Text machineOrCompany;
-
     private Stage stage;
     private Scene scene;
     private Part part;
     private int selectedPartIndex;
 
+    /**
+     * Initializes the controller class.
+     * Moves focus to the save button and sets up the radio buttons.
+     */
     public void initialize() {
         // moves focus to save button
         saveButton.setFocusTraversable(true);
@@ -59,6 +53,10 @@ public class ModifyPartController {
         outsourced.setToggleGroup(group1);
     }
 
+    /**
+     * Changes the text of the machineOrCompany field based on the selected radio button.
+     * Called when one of the radio buttons is clicked.
+     */
     public void radioSwitch() {
         if (inhouse.isSelected()) {
             machineOrCompany.setText("Machine ID");
@@ -67,6 +65,12 @@ public class ModifyPartController {
         }
     }
 
+    /**
+     * Sets the text fields and radio buttons with the data from the given part object.
+     * Sets the selected index for the part in the parts table.
+     *  @param part The part object to retrieve data from.
+     * @param selectedPartIndex The index of the selected part in the parts table.
+     */
     public void setPart(Part part, int selectedPartIndex) {
         this.part = part;
         id.setText(Integer.toString(part.getId()));
@@ -89,6 +93,12 @@ public class ModifyPartController {
 
     }
 
+    /**
+     * Overwrites the previous part with the modified part to the inventory.
+     * Called when the "Save" button is clicked.
+     * @param event The action event.
+     * @throws IOException if an error occurs when loading the FXML file.
+     */
     public void savePart(ActionEvent event) throws IOException {
         String partName = name.getText();
         int partId = 0;
@@ -178,6 +188,12 @@ public class ModifyPartController {
         switchToMainScene(event);
     }
 
+    /**
+     * Switches the scene back to the main view.
+     * Called when the "Cancel" button is clicked.
+     * @param event The action event.
+     * @throws IOException if an error occurs when loading the FXML file.
+     */
     public void switchToMainScene(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("main_view.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

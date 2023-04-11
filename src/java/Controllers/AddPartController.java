@@ -13,42 +13,43 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
+/**
+ * The AddPartController class manages the functionality for adding a new part to the inventory.
+ *
+ * RUNTIME ERROR
+ * Previously, the savePart() method was crashing and throwing a NumberFormatException error when invalid values
+ * were submitted to TextFields. (For example, String in min and max TextFields).
+ * To prevent these crashes, the savePart() method was updated to include a try-catch block that catches
+ * the NumberFormatException error and displays an alert to the user that the troubled TextField requires
+ * a different data type. This allows users to identify the problem with their inputs, and prevents
+ * the app from crashing.
+ */
 public class AddPartController {
 
     @FXML private AnchorPane mainPane;
-    @FXML
-    private TextField name;
-    @FXML
-    private TextField stock;
-    @FXML
-    private TextField price;
-    @FXML
-    private TextField max;
-    @FXML
-    private TextField min;
-    @FXML
-    private TextField source;
+    @FXML private TextField name;
+    @FXML private TextField stock;
+    @FXML private TextField price;
+    @FXML private TextField max;
+    @FXML private TextField min;
+    @FXML private TextField source;
     @FXML private ToggleGroup group1;
-
     @FXML private RadioButton inhouse;
-
     @FXML private RadioButton outsourced;
-
     @FXML private Text machineOrCompany;
-
     @FXML private Button saveButton;
-
     private Stage stage;
     private Scene scene;
 
-
+    /**
+     * Initializes the controller class.
+     * Moves focus to the save button and sets up the radio buttons.
+     */
     public void initialize() {
         // moves focus to save button
         saveButton.setFocusTraversable(true);
@@ -59,6 +60,10 @@ public class AddPartController {
         outsourced.setToggleGroup(group1);
     }
 
+    /**
+     * Changes the text of the machineOrCompany field based on the selected radio button.
+     * Called when one of the radio buttons is clicked.
+     */
     public void radioSwitch() {
         if (inhouse.isSelected()) {
             machineOrCompany.setText("Machine ID");
@@ -67,14 +72,10 @@ public class AddPartController {
         }
     }
 
-    public void switchToMainScene(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("main_view.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
+    /**
+     * Generates a new auto-generated ID for the new part.
+     * @return The new auto-generated ID.
+     */
     public static int autoId() {
         ObservableList<Part> allParts = Inventory.getAllParts();
         int maxId = 0;
@@ -87,6 +88,12 @@ public class AddPartController {
         return maxId + 1;
     }
 
+    /**
+     * Saves the new part to the inventory.
+     * Called when the "Save" button is clicked.
+     * @param event The action event.
+     * @throws IOException if an error occurs when loading the FXML file.
+     */
     public void savePart(ActionEvent event) throws IOException {
         String partName = null;
         int partStock = 0;
@@ -187,6 +194,20 @@ public class AddPartController {
             Inventory.addPart(newPart);
         }
         switchToMainScene(event);
+    }
+
+    /**
+     * Switches the scene back to the main view.
+     * Called when the "Cancel" button is clicked.
+     * @param event The action event.
+     * @throws IOException if an error occurs when loading the FXML file.
+     */
+    public void switchToMainScene(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("main_view.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 

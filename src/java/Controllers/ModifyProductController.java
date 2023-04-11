@@ -16,27 +16,18 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.Optional;
-
 import static Models.Inventory.getAllParts;
 
 public class ModifyProductController {
 
     @FXML private TextField id;
-
-    @FXML
-    private TextField name;
-    @FXML
-    private TextField stock;
-    @FXML
-    private TextField price;
-    @FXML
-    private TextField max;
-    @FXML
-    private TextField min;
-
+    @FXML private TextField name;
+    @FXML private TextField stock;
+    @FXML private TextField price;
+    @FXML private TextField max;
+    @FXML private TextField min;
     @FXML private TextField partSearch;
     @FXML private TableView allPartsTable;
     @FXML private TableColumn<Part, Integer> allPartsIdColumn;
@@ -48,17 +39,19 @@ public class ModifyProductController {
     @FXML private TableColumn<Part, String> associatedPartsNameColumn;
     @FXML private TableColumn<Part, Integer> associatedPartsInventoryColumn;
     @FXML private TableColumn<Part, Double> associatedPartsPriceColumn;
-    @FXML private Button addButton;
-    @FXML private Button removeButton;
     @FXML private Button saveButton;
     private Stage stage;
     private Scene scene;
     private Product product;
     private int selectedProductIndex;
-
     private ObservableList<Part> associatedPartList = FXCollections.observableArrayList();
 
-
+    /**
+     * Initializes the controller class.
+     * Sets up table columns and populates table with data.
+     * Moves focus to the save button.
+     * Binds enter to trigger searchParts()
+     */
     public void initialize() {
         // moves focus to save button
         saveButton.setFocusTraversable(true);
@@ -71,6 +64,14 @@ public class ModifyProductController {
         allPartsPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
+    /**
+     * Sets the product details and associated parts in the UI when a product is selected.
+     * Sets up table columns and populates table with data.
+     * Binds enter to trigger searchParts()
+     * @param product The product object to set the details for.
+     * @param selectedProductIndex The index of the selected product in the products list.
+     *
+     */
     public void setProduct(Product product, int selectedProductIndex) {
         this.product = product;
         id.setText(Integer.toString(product.getId()));
@@ -99,6 +100,12 @@ public class ModifyProductController {
         });
     }
 
+    /**
+     * Searches for parts and displays the search results in the all parts table.
+     * If the search query is empty or null, all parts are displayed in the all parts table.
+     * If no parts are found for the search query, an error alert is displayed.
+     * @param searchQuery the search query to use for the search
+     */
     private void searchParts(String searchQuery) {
         if (searchQuery == null || searchQuery.trim().isEmpty()) {
             allPartsTable.setItems(getAllParts());
@@ -130,6 +137,11 @@ public class ModifyProductController {
         }
     }
 
+    /**
+     * Adds the selected part to the associated part table.
+     * Displays an error message if no part is selected or if the selected part is already in the associated part list.
+     * @param event the action event that triggered this method
+     */
     public void addToAssociatedPartTable(ActionEvent event) {
         Part selected = (Part) allPartsTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
@@ -144,6 +156,11 @@ public class ModifyProductController {
         }
     }
 
+    /**
+     * Removes the selected part from the associated part table.
+     * Displays a confirmation dialog before removing the part and an error message if no part is selected.
+     * @param event the action event that triggered this method
+     */
     public void removeFromAssociatedPartTable(ActionEvent event) {
         Part selected = (Part) associatedPartsTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
@@ -167,6 +184,12 @@ public class ModifyProductController {
         }
     }
 
+    /**
+     * Saves the product after validating user input for name, stock, price, min, and max.
+     * Overwrites the previous product to the Inventory and switches the scene back to the main scene.
+     * @param event The ActionEvent triggered by the save button.
+     * @throws IOException if an error occurs while loading the main scene.
+     */
     public void saveProduct(ActionEvent event) throws IOException {
         int productId = 0;
         String productName = null;
@@ -240,6 +263,12 @@ public class ModifyProductController {
         switchToMainScene(event);
     }
 
+    /**
+     * Switches the scene back to the main view.
+     * Called when the "Cancel" button is clicked.
+     * @param event The action event.
+     * @throws IOException if an error occurs when loading the FXML file.
+     */
     public void switchToMainScene(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("main_view.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

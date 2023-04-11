@@ -18,19 +18,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import static Models.Inventory.getAllParts;
 import static Models.Inventory.getAllProducts;
 
 public class MainController implements Initializable {
-
-    private Stage stage;
-    private Scene scene;
 
     @FXML private Button partModifyButton;
     @FXML private Button partDeleteButton;
@@ -47,11 +42,17 @@ public class MainController implements Initializable {
     @FXML private TableColumn<Part, String> productNameColumn;
     @FXML private TableColumn<Part, Integer> productInventoryColumn;
     @FXML private TableColumn<Part, Double> productPriceColumn;
-
+    private Stage stage;
+    private Scene scene;
     private static int selectedPartIndex = -1;
-
     private int selectedProductIndex = -1;
 
+    /**
+     * Initializes the Main Controller class.
+     * Sets up table columns and populates table with data.
+     * Moves focus to the save button.
+     * Binds enter to trigger searchParts() & searchProducts()
+     */
     public void initialize(URL location, ResourceBundle resourceBundle) {
         // moves focus to exit button
         exitButton.setFocusTraversable(true);
@@ -68,7 +69,6 @@ public class MainController implements Initializable {
         productNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         productInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         productPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-
 
         partTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
@@ -140,6 +140,12 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * Searches for parts and displays the search results in the all parts table.
+     * If the search query is empty or null, all parts are displayed in the all parts table.
+     * If no parts are found for the search query, an error alert is displayed.
+     * @param searchQuery the search query to use for the search
+     */
     private void searchParts(String searchQuery) {
         if (searchQuery == null || searchQuery.trim().isEmpty()) {
             partTable.setItems(getAllParts());
@@ -171,6 +177,12 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * Searches for products and displays the search results in the products table.
+     * If the search query is empty or null, all products are displayed in the products table.
+     * If no products are found for the search query, an error alert is displayed.
+     * @param searchQuery the search query to use for the search
+     */
     private void searchProducts(String searchQuery) {
         if (searchQuery == null || searchQuery.trim().isEmpty()) {
             productTable.setItems(getAllProducts());
@@ -202,6 +214,12 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * Switches to the add_part view.
+     * Called when the "Add" button is clicked.
+     * @param event The action event.
+     * @throws IOException if an error occurs when loading the FXML file.
+     */
     public void switchToAddPartScene(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("add_part.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -211,6 +229,13 @@ public class MainController implements Initializable {
 
     }
 
+    /**
+     * Switches to the modify_part view.
+     * Called when the "Modify" button is clicked.
+     * Displays error if no part is selected
+     * @param event The action event.
+     * @throws IOException if an error occurs when loading the FXML file.
+     */
     public void switchToModifyPartScene(ActionEvent event) throws IOException {
         selectedPartIndex = partTable.getSelectionModel().getSelectedIndex();
         if (selectedPartIndex == -1) {
@@ -232,7 +257,12 @@ public class MainController implements Initializable {
         stage.show();
     }
 
-
+    /**
+     * Switches to the add_product view.
+     * Called when the "Add" button is clicked.
+     * @param event The action event.
+     * @throws IOException if an error occurs when loading the FXML file.
+     */
     public void switchToAddProductScene(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("add_product.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -242,6 +272,13 @@ public class MainController implements Initializable {
 
     }
 
+    /**
+     * Switches to the modify_product view.
+     * Called when the "Modify" button is clicked.
+     * Displays error if no part is selected
+     * @param event The action event.
+     * @throws IOException if an error occurs when loading the FXML file.
+     */
     public void switchToModifyProductScene(ActionEvent event) throws IOException {
         selectedProductIndex = productTable.getSelectionModel().getSelectedIndex();
         if (selectedProductIndex == -1) {
@@ -263,6 +300,9 @@ public class MainController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Handles the action of the Exit button by closing the application.
+     */
     @FXML
     private void handleExitButtonAction() {
         Platform.exit();

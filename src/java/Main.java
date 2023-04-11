@@ -5,10 +5,25 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
+/**
+ * @author Arjun Esguerra
+ * C482 Software 1
+ * The main class for the Inventory Management System application.
+ * Launches the application and initializes the inventory with some sample data.
+ *
+ * FUTURE ENHANCEMENT - User Authentication:
+ * Implement a feature that allows users to create accounts and log in with their credentials to access the application.
+ * External Database that allows for information to be saved for later access.
+ */
 public class Main extends Application {
+
+    /**
+     * Starts the GUI of the application and loads the main view.
+     * @param stage The primary stage for the application.
+     * @throws IOException If an error occurs while loading the main view FXML file.
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Controllers/main_view.fxml"));
@@ -18,6 +33,11 @@ public class Main extends Application {
         stage.show();
     }
 
+    /**
+     * Initializes the inventory with some sample data and launches the application.
+     *
+     * @param args Command line arguments (not used).
+     */
     public static void main(String[] args) {
         InHouse inhouse1 = new InHouse(1, "Brakes", 200.00, 6, 1, 6, 1);
         InHouse inhouse2 = new InHouse(2, "Fuel", 50.00, 20, 1, 20, 2);

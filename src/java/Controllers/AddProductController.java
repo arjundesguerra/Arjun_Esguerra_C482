@@ -24,17 +24,11 @@ import static Models.Inventory.getAllParts;
 
 public class AddProductController {
 
-    @FXML
-    private TextField name;
-    @FXML
-    private TextField stock;
-    @FXML
-    private TextField price;
-    @FXML
-    private TextField max;
-    @FXML
-    private TextField min;
-
+    @FXML private TextField name;
+    @FXML private TextField stock;
+    @FXML private TextField price;
+    @FXML private TextField max;
+    @FXML private TextField min;
     @FXML private TextField partSearch;
     @FXML private TableView allPartsTable;
     @FXML private TableColumn<Part, Integer> allPartsIdColumn;
@@ -51,7 +45,12 @@ public class AddProductController {
     private Stage stage;
     private Scene scene;
 
-
+    /**
+     * Initializes the controller class.
+     * Sets up table columns and populates table with data.
+     * Moves focus to the save button.
+     * Binds enter to trigger searchParts()
+     */
     public void initialize() {
         // moves focus to save button
         saveButton.setFocusTraversable(true);
@@ -76,6 +75,12 @@ public class AddProductController {
         });
     }
 
+    /**
+     * Searches for parts and displays the search results in the all parts table.
+     * If the search query is empty or null, all parts are displayed in the all parts table.
+     * If no parts are found for the search query, an error alert is displayed.
+     * @param searchQuery the search query to use for the search
+     */
     private void searchParts(String searchQuery) {
         if (searchQuery == null || searchQuery.trim().isEmpty()) {
             allPartsTable.setItems(getAllParts());
@@ -107,6 +112,10 @@ public class AddProductController {
         }
     }
 
+    /**
+     * Generates a new auto-generated ID for the new product.
+     * @return The new auto-generated ID.
+     */
     public static int autoId() {
         ObservableList<Product> allProducts = Inventory.getAllProducts();
         int maxId = 0;
@@ -119,6 +128,11 @@ public class AddProductController {
         return maxId + 1;
     }
 
+    /**
+     * Adds the selected part to the associated part table.
+     * Displays an error message if no part is selected or if the selected part is already in the associated part list.
+     * @param event the action event that triggered this method
+     */
     public void addToAssociatedPartTable(ActionEvent event) {
         Part selected = (Part) allPartsTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
@@ -133,6 +147,11 @@ public class AddProductController {
         }
     }
 
+    /**
+     * Removes the selected part from the associated part table.
+     * Displays a confirmation dialog before removing the part and an error message if no part is selected.
+     * @param event the action event that triggered this method
+     */
     public void removeFromAssociatedPartTable(ActionEvent event) {
         Part selected = (Part) associatedPartsTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
@@ -154,6 +173,12 @@ public class AddProductController {
         }
     }
 
+    /**
+     * Saves the product after validating user input for name, stock, price, min, and max.
+     * Adds the new product to the Inventory and switches the scene back to the main scene.
+     * @param event The ActionEvent triggered by the save button.
+     * @throws IOException if an error occurs while loading the main scene.
+     */
     public void saveProduct(ActionEvent event) throws IOException {
         String productName = null;
         int productStock = 0;
@@ -225,6 +250,12 @@ public class AddProductController {
         switchToMainScene(event);
     }
 
+    /**
+     * Switches the scene back to the main view.
+     * Called when the "Cancel" button is clicked.
+     * @param event The action event.
+     * @throws IOException if an error occurs when loading the FXML file.
+     */
     public void switchToMainScene(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("main_view.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
