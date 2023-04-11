@@ -51,7 +51,7 @@ public class MainController implements Initializable {
      * Initializes the Main Controller class.
      * Sets up table columns and populates table with data.
      * Moves focus to the save button.
-     * Binds enter to trigger searchParts() & searchProducts()
+     * Binds enter to trigger searchParts() and searchProducts()
      */
     public void initialize(URL location, ResourceBundle resourceBundle) {
         // moves focus to exit button
