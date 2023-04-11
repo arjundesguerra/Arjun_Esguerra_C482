@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.util.Optional;
 import static Models.Inventory.getAllParts;
 
+/**
+ * The ModifyProductController class manages the functionality for modifying a selected product in the inventory.
+ */
 public class ModifyProductController {
 
     @FXML private TextField id;
@@ -273,6 +276,7 @@ public class ModifyProductController {
         Parent root = FXMLLoader.load(getClass().getResource("main_view.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        stage.setTitle("Inventory Management System");
         stage.setScene(scene);
         stage.show();
 

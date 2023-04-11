@@ -11,12 +11,16 @@ import java.io.IOException;
 /**
  * @author Arjun Esguerra
  * C482 Software 1
+ * Javadoc folder location: /Arjun_Esguerra_C482/javadoc
+ *
  * The main class for the Inventory Management System application.
  * Launches the application and initializes the inventory with some sample data.
  *
  * FUTURE ENHANCEMENT - User Authentication:
  * Implement a feature that allows users to create accounts and log in with their credentials to access the application.
  * External Database that allows for information to be saved for later access.
+ *
+ * RUNTIME ERROR - More information found in AddPartController
  */
 public class Main extends Application {
 
@@ -35,8 +39,7 @@ public class Main extends Application {
     }
 
     /**
-     * Initializes the inventory with some sample data and launches the application.
-     *
+     * Launches the application
      * @param args Command line arguments (not used).
      */
     public static void main(String[] args) {

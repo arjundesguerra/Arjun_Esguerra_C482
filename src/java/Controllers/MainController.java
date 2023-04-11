@@ -25,6 +25,10 @@ import java.util.ResourceBundle;
 import static Models.Inventory.getAllParts;
 import static Models.Inventory.getAllProducts;
 
+/**
+ * The MainController class is the controller for the main view of the Inventory Management System.
+ * It initializes the view and sets up event handlers for user input.
+ */
 public class MainController implements Initializable {
 
     @FXML private Button partModifyButton;
@@ -224,6 +228,7 @@ public class MainController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("add_part.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        stage.setTitle("Add Part");
         stage.setScene(scene);
         stage.show();
 
@@ -253,6 +258,7 @@ public class MainController implements Initializable {
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        stage.setTitle("Modify Part");
         stage.setScene(scene);
         stage.show();
     }
@@ -267,6 +273,7 @@ public class MainController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("add_product.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        stage.setTitle("Add Product");
         stage.setScene(scene);
         stage.show();
 
@@ -295,6 +302,7 @@ public class MainController implements Initializable {
         modifyProductController.setProduct(productTable.getItems().get(selectedProductIndex), selectedProductIndex);
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setTitle("Modify Product");
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

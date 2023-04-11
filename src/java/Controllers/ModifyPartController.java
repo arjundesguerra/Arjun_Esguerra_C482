@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * The AddPartController class manages the functionality for modifying a selected part in the inventory.
+ * The ModifyPartController class manages the functionality for modifying a selected part in the inventory.
  */
 public class ModifyPartController {
 
@@ -198,6 +198,7 @@ public class ModifyPartController {
         Parent root = FXMLLoader.load(getClass().getResource("main_view.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        stage.setTitle("Inventory Management System");
         stage.setScene(scene);
         stage.show();
 

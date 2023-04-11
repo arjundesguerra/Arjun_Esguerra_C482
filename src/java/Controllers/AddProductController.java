@@ -21,7 +21,9 @@ import java.io.IOException;
 import java.util.Optional;
 
 import static Models.Inventory.getAllParts;
-
+/**
+ * The AddProductController class manages the functionality for adding a new product to the inventory.
+*/
 public class AddProductController {
 
     @FXML private TextField name;
@@ -260,6 +262,7 @@ public class AddProductController {
         Parent root = FXMLLoader.load(getClass().getResource("main_view.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        stage.setTitle("Inventory Management System");
         stage.setScene(scene);
         stage.show();
     }
